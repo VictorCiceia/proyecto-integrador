@@ -3,31 +3,30 @@ package com.proyecto.integrador.integrador.service.impl;
 import com.proyecto.integrador.integrador.dto.UserDto;
 import com.proyecto.integrador.integrador.entity.UserEntity;
 import com.proyecto.integrador.integrador.exception.ResourceNotFoundException;
+import com.proyecto.integrador.integrador.repository.UserRepository;
 import com.proyecto.integrador.integrador.service.UserService;
 import com.proyecto.integrador.integrador.service.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    final HashMap<Long, UserEntity> hashMap = new HashMap<>();
-    Long id = 1L;
-
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public List<UserDto> all() {
-        return new ArrayList<>(
-                this.hashMap.values().stream().map((u) -> this.userMapper.toDto(u))
-                        .toList()
-        );
+        return this.userRepository.findAll()
+                .stream().map(this.userMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -39,10 +38,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto save(final UserDto userDto) {
         final UserEntity entity = this.userMapper.toEntity(userDto);
-        entity.setId(this.id);
         entity.setCreatedAt(new Date());
-        this.hashMap.put(this.id++, entity);
-        return this.userMapper.toDto(entity);
+        return this.userMapper.toDto(this.userRepository.save(entity));
     }
 
     @Override
@@ -51,19 +48,17 @@ public class UserServiceImpl implements UserService {
         user.setName(userDto.getName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
-        return this.userMapper.toDto(user);
+        return this.userMapper.toDto(this.userRepository.save(user));
     }
 
     @Override
     public void deleteById(final Long id) {
-        this.findEntityById(id);
-        this.hashMap.remove(id);
+        final UserEntity entity = this.findEntityById(id);
+        this.userRepository.delete(entity);
     }
 
     private UserEntity findEntityById(final Long id) {
-        final UserEntity user = hashMap.get(id);
-        if (user == null)
-            throw new ResourceNotFoundException("Usuario", "ID", id.toString());
-        return user;
+        return this.userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario", "ID", id.toString()));
     }
 }
