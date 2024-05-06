@@ -13,6 +13,8 @@ public interface UserMapper {
     @Mapping(target = "name", source = "name")
     @Mapping(target = "lastName", source = "lastName")
     @Mapping(target = "email", source = "email")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     UserEntity toEntity(UserDto dto);
 
 }
