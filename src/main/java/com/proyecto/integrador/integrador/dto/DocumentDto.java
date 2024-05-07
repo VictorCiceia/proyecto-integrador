@@ -19,7 +19,7 @@ public class DocumentDto {
             description = "Identificador unico",
             type = "string",
             example = "1")
-    private long id;
+    private String id;
 
     @Schema(
             description = "Nombre",

@@ -13,6 +13,8 @@ public interface DocumentMapper {
     @Mapping(target = "name", source = "name")
     @Mapping(target = "description", source = "description")
     @Mapping(target = "path", source = "path")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     DocumentEntity toEntity(DocumentDto dto);
 
 }
