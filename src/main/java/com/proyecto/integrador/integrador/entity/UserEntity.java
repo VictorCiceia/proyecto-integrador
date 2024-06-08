@@ -1,20 +1,24 @@
 package com.proyecto.integrador.integrador.entity;
 
+import com.proyecto.integrador.integrador.util.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
 @Entity
-@Table(name = "USERS")
+@Builder
+@Table(name = "USERS", uniqueConstraints = {@UniqueConstraint(columnNames = {"EMAIL"})})
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity {
+public class UserEntity implements UserDetails {
 
     @Id
     @Column(name = "ID", nullable = false)
@@ -32,5 +36,40 @@ public class UserEntity {
 
     @Column(name = "CREATED_AT", nullable = false)
     private Date createdAt;
+
+    String password;
+
+    @Enumerated(EnumType.STRING)
+    Role role;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority((role.name())));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
 }
