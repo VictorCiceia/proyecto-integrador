@@ -1,16 +1,7 @@
 package com.proyecto.integrador.integrador.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.Date;
 
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class DocumentEntity {
 
     private long id;
@@ -23,5 +14,54 @@ public class DocumentEntity {
 
     private Date createdAt;
 
+    public DocumentEntity(long id, String name, String description, String path, Date createdAt) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.path = path;
+        this.createdAt = createdAt;
+    }
 
+    public DocumentEntity() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 }

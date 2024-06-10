@@ -1,17 +1,10 @@
 package com.proyecto.integrador.integrador.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.Date;
 
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Schema(description = "Objeto que representa a un Documento")
 public class DocumentDto {
 
@@ -45,4 +38,54 @@ public class DocumentDto {
             example = "2024-05-04T23:51:14.243Z")
     private Date createdAt;
 
+    public DocumentDto(long id, String name, String description, String path, Date createdAt) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.path = path;
+        this.createdAt = createdAt;
+    }
+
+    public DocumentDto() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 }
