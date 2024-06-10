@@ -7,11 +7,13 @@ import com.proyecto.integrador.integrador.repository.DocumentRepository;
 import com.proyecto.integrador.integrador.service.DocumentService;
 import com.proyecto.integrador.integrador.service.mapper.DocumentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class DocumentServiceImpl implements DocumentService {
 
     @Autowired
