@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DocumentServiceImpl implements DocumentService {
 
@@ -23,8 +24,7 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public List<DocumentDto> all() {
         return new ArrayList<>(
-                this.hashMap.values().stream().map((d) -> this.documentMapper.toDto(d))
-                        .toList()
+                this.hashMap.values().stream().map((d) -> this.documentMapper.toDto(d)).collect(Collectors.toList())
         );
     }
 

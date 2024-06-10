@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,8 +26,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> all() {
         return new ArrayList<>(
-                this.hashMap.values().stream().map((u) -> this.userMapper.toDto(u))
-                        .toList()
+                this.hashMap.values().stream().map((u) -> this.userMapper.toDto(u)).collect(Collectors.toList())
         );
     }
 
